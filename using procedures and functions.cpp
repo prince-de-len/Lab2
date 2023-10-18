@@ -15,7 +15,7 @@ void FillArray(double array[], int sizeArray) {
         cout << index + 1 << ". ";
         cin  >> array[index];
         
-        }
+    }
 }
 
 void count_nonzero(double array[], int sizeArray) {
