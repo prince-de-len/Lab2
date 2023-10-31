@@ -2,14 +2,13 @@
 * Автор: Тимофеев Гордей Евгеньевич. ПИ-231
 * Версия 1
 * Название: Работа с файлами (Вариант 13)
-* Ссылка: https://onlinegdb.com/2dWyl6-wU
+* Ссылка: https://onlinegdb.com/wlPKcrpyR
 ************************************/
 
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
-
 
 using namespace std;
 
@@ -26,9 +25,9 @@ int main() {
     min_weight = 1000000000;
     max_price = 0;
     min_price = 1000000000;
+    
     cout << "Введите фирму (Apple, Samsung_Galaxy, Xiaomi):";
     cin >> firm;
-
 
     ifstream fin;
     fin.open(path);
@@ -38,36 +37,46 @@ int main() {
     }
     else {
         while (!fin.eof()) {
+            
             word = "";
             fin >> word;
+            
             if (word == firm) {
+                
                 data = "";
                 getline(fin, data);
                 data.erase(0, 1);
+                
                 cout << data << endl;
+                
                 str << data;
                 while (getline(str, data, ' ')) {
                     ++count;
-                    //cout << data << endl;
+                    
                     if (count == 1) {
                         name = data;
                     }
+                    
                     if (count == 3) {
                         weight = stoi(data.substr(0, data.size() - 1));
-                        //cout << weight << endl;
                         if (min_weight > weight) {
                             min_weight = weight;
                             lightest_phone = name;
                         }
+                        
                     }
+                    
                     if (count == 4) {
                         ++number_of_models;
+                        
                         price = stoi(data.substr(0, data.size() - 7));
                         all_prices += price;
+                        
                         if (min_price > price) {
                             min_price = price;
                             name_min_phone = word + " " +  name;
                         }
+                        
                         else if (max_price < price) {
                             max_price = price;
                             name_max_phone = word + " " + name;
@@ -77,24 +86,29 @@ int main() {
                 str.clear();
                 count = 0;
             }
+            
             else {
+                
                 common_data = "";
                 getline(fin, common_data);
                 common_data.erase(0, 1);
-                //cout << common_data << endl;
                 str << common_data;
+                
                 while (getline(str, common_data, ' ')) {
                     ++count;
-                    //cout << common_data << endl;
+                    
                     if (count == 1) {
                         name = common_data;
                     }
+                    
                     if (count == 4) {
                         common_price = stoi(common_data.substr(0, common_data.size() - 7));
+                        
                         if (min_price > common_price) {
                             min_price = common_price;
                             name_min_phone = word + " " +  name;
                         }
+                        
                         else if (max_price < common_price) {
                             max_price = common_price;
                             name_max_phone = word + " " + name;
@@ -106,6 +120,7 @@ int main() {
             }
         }
         average = all_prices / number_of_models;
+        
         cout << "Средняя стоимость всех моделей: " << average << "_руб " << endl;
         cout << "Самый легкий телефон этой фирмы: " << lightest_phone << endl;
         cout << endl;
@@ -114,6 +129,7 @@ int main() {
         cout << "Самый дорогой телефон из всех: " << name_max_phone << " стоимостью "
         << max_price << "_руб" <<  endl;
     }
+    
     fin.close();
     
     return 0;
